@@ -28,7 +28,7 @@ jobs:
             # Check if app directory exists; clone if missing
             if [ ! -d /my-next-app ]; then
               echo "Directory /my-next-app not found. Cloning repository..."
-              git clone https://github.com/sujal-GITHUB/testing.git/my-next-app
+              git clone https://github.com/sujal-GITHUB/testing.git /my-next-app
             fi
 
             cd /my-next-app

@@ -56,6 +56,6 @@ jobs:
             npm run build
 
             # Restart or start app using pm2
-            pm2 restart all || pm2 start ecosystem.config.js --env production
+            pm2 restart my-next-app || pm2 start npm --name my-next-app -- start
 
             echo "✅ Deployment completed successfully!"

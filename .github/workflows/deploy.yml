@@ -21,17 +21,19 @@ jobs:
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           port: 22
           script: |
-            set -e  # Exit immediately if a command exits with a non-zero status
+            set -e  # Exit immediately on error
 
             echo "Deploying to EC2 instance..."
 
+            APP_DIR=~/my-next-app
+
             # Check if app directory exists; clone if missing
-            if [ ! -d /my-next-app ]; then
-              echo "Directory /my-next-app not found. Cloning repository..."
-              git clone https://github.com/sujal-GITHUB/testing.git /my-next-app
+            if [ ! -d "$APP_DIR" ]; then
+              echo "Directory $APP_DIR not found. Cloning repository..."
+              git clone https://github.com/sujal-GITHUB/testing.git "$APP_DIR"
             fi
 
-            cd /my-next-app
+            cd "$APP_DIR"
 
             # Pull latest changes
             git pull origin main
@@ -56,4 +58,4 @@ jobs:
             # Restart or start app using pm2
             pm2 restart all || pm2 start ecosystem.config.js --env production
 
-            echo "Deployment completed successfully!"
+            echo "✅ Deployment completed successfully!"

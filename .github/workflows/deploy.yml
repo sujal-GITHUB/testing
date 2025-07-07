@@ -21,10 +21,39 @@ jobs:
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           port: 22
           script: |
+            set -e  # Exit immediately if a command exits with a non-zero status
+
             echo "Deploying to EC2 instance..."
+
+            # Check if app directory exists; clone if missing
+            if [ ! -d /my-next-app ]; then
+              echo "Directory /my-next-app not found. Cloning repository..."
+              git clone https://github.com/sujal-GITHUB/testing.git/my-next-app
+            fi
+
             cd /my-next-app
+
+            # Pull latest changes
             git pull origin main
+
+            # Install Node.js if not installed
+            if ! command -v node > /dev/null; then
+              echo "Node.js not found, installing..."
+              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # Install pm2 if not installed
+            if ! command -v pm2 > /dev/null; then
+              echo "pm2 not found, installing..."
+              sudo npm install -g pm2
+            fi
+
+            # Install dependencies and build
             npm install
             npm run build
+
+            # Restart or start app using pm2
             pm2 restart all || pm2 start ecosystem.config.js --env production
+
             echo "Deployment completed successfully!"

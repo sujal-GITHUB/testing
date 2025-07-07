@@ -1,103 +1,67 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 
+const jokes = [
+  "Why did the developer go broke? Because he used up all his cache! 😂",
+  "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+  "Why did the function return early? Because it had a date with an exception! 💔",
+  "Why do JavaScript developers wear glasses? Because they don’t C#! 🤓",
+  "Why did the computer get cold? It forgot to close its Windows! 🥶",
+  "Why was the JavaScript file bigger than the CSS file? Because it was full of 'var's! 📦",
+  "Why did the array go to therapy? To get its elements in order! 🛋️",
+  "Why did the coder get kicked out of school? Because he kept taking classes! 🏫",
+  "Why did the React component feel relieved? It finally unmounted! 😌",
+  "Why did the developer quit his job? He didn’t get arrays! 😅",
+  "Why did the CSS selector break up with the HTML element? Because it found someone more specific! 💔",
+  "Why do Python programmers have low self-esteem? Because they’re constantly comparing their self to others! 🐍",
+  "Why did the server go to the gym? To get stronger requests! 💪",
+];
+
 export default function Home() {
+  const [joke, setJoke] = useState(jokes[0]);
+
+  function tellRandomJoke() {
+    let newJoke;
+    do {
+      newJoke = jokes[Math.floor(Math.random() * jokes.length)];
+    } while (newJoke === joke && jokes.length > 1);
+    setJoke(newJoke);
+  }
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      {/* Hero Section */}
+      <section className="row-start-2 w-full max-w-2xl flex flex-col items-center justify-center gap-8 text-center bg-gradient-to-br from-yellow-100 via-pink-100 to-blue-100 dark:from-[#222] dark:via-[#333] dark:to-[#222] rounded-3xl shadow-xl p-10 border border-black/10 dark:border-white/10">
         <Image
-          className="dark:invert"
           src="/next.svg"
           alt="Next.js logo"
-          width={180}
-          height={38}
+          width={120}
+          height={30}
+          className="mb-2 dark:invert animate-bounce"
           priority
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-blue-500 to-yellow-500 drop-shadow-lg">
+          Welcome to the{" "}
+          <span className="inline-block rotate-6">😂</span> Funniest Next.js Page!
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
+          This page is so{" "}
+          <span className="font-bold text-pink-500">funny</span>, even your code
+          will laugh! <br />
+          <span className="inline-block animate-spin text-2xl">🤪</span>
+        </p>
+        <div className="bg-white/70 dark:bg-black/30 rounded-xl p-6 shadow-inner border border-black/10 dark:border-white/10 min-h-[60px] flex items-center justify-center text-xl font-semibold text-gray-800 dark:text-gray-100 transition-all">
+          {joke}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          className="mt-4 px-6 py-3 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 dark:from-yellow-600 dark:via-pink-600 dark:to-blue-600 text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-200"
+          onClick={tellRandomJoke}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Tell me a joke!
+        </button>
+      </section>
+
     </div>
   );
 }
